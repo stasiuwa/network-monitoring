@@ -1,0 +1,18 @@
+﻿services:
+  host-sim:
+    build: ./suricata
+    container_name: host-sim
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    network_mode: host
+
+    volumes:
+      - ./suricata/log:/var/log/suricata
+      - ./suricata/rules:/etc/suricata/rules
+
+    depends_on:
+      - logstash
+      - zabbix-server

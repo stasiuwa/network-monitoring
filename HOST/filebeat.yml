@@ -1,0 +1,24 @@
+filebeat.inputs:
+  - type: filestream
+    id: suricata
+    enabled: true
+
+    paths:
+      - /var/log/suricata/eve.json
+
+    parsers:
+      - ndjson:
+          overwrite_keys: true
+          add_error_key: true
+
+    fields:
+      service: suricata
+    fields_under_root: true
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+processors:
+  - add_host_metadata: ~
+
+logging.level: info
