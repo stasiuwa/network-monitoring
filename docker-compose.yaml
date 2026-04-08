@@ -1,13 +1,108 @@
-﻿services:
+version: "3.9"
+
+services:
+
+  postgres:
+    build: ./postgres
+    container_name: postgres
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+
+  zabbix-server:
+    build: zabbix/server
+    container_name: zabbix-server
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file: .env
+    ports:
+      - "10051:10051"
+    networks:
+      - monitoring
+
+  zabbix-web:
+    build: zabbix/web
+    container_name: zabbix-web
+    restart: unless-stopped
+    depends_on:
+      - zabbix-server
+    env_file: .env
+    ports:
+      - "8080:8080"
+    networks:
+      - monitoring
+
+  zabbix-agent:
+    build: zabbix/agent
+    container_name: zabbix-agent
+    restart: unless-stopped
+
+    environment:
+      - ZBX_SERVER_HOST=zabbix-server
+      - ZBX_HOSTNAME=host-sim
+
+    ports:
+      - "10050:10050"
+
+    depends_on:
+      - zabbix-server
+
+    networks:
+      - monitoring
+
+  elasticsearch:
+    build: ./elasticsearch
+    container_name: elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    networks:
+      - monitoring
+
+  logstash:
+    build: ./logstash
+    container_name: logstash
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5044:5044"
+    networks:
+      - monitoring
+
+  kibana:
+    build: ./kibana
+    container_name: kibana
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - monitoring
+
   host-sim:
-    build: ./suricata
+    build: ./host-sim
     container_name: host-sim
+    restart: unless-stopped
 
     cap_add:
       - NET_ADMIN
       - NET_RAW
 
     network_mode: host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
     volumes:
       - ./suricata/log:/var/log/suricata
@@ -16,3 +111,11 @@
     depends_on:
       - logstash
       - zabbix-server
+
+
+volumes:
+  postgres_data:
+
+networks:
+  monitoring:
+    driver: bridge
