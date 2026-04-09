@@ -2,7 +2,6 @@ filebeat.inputs:
   - type: filestream
     id: suricata
     enabled: true
-
     paths:
       - /var/log/suricata/eve.json
 
@@ -14,7 +13,10 @@ filebeat.inputs:
     fields:
       service: suricata
     fields_under_root: true
-
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+setup.kibana:
+  host: "host.docker.internal:5601"
 output.logstash:
   hosts: ["host.docker.internal:5044"]
 
