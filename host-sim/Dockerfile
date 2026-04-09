@@ -28,9 +28,6 @@ COPY suricata.yaml /etc/suricata/suricata.yaml
 COPY filebeat.yml /opt/filebeat/filebeat.yml
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN useradd -m appuser && \
-    chown -R appuser:appuser /opt /etc/suricata /var/log/suricata /var/lib/filebeat /var/log/supervisor
-
 USER root
 
 CMD ["/usr/bin/supervisord"]
