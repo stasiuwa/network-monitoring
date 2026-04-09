@@ -1,4 +1,4 @@
-FROM zabbix/zabbix-agent2:alpine-6.4-latest
+FROM zabbix/zabbix-agent2:alpine-latest
 
 LABEL org.opencontainers.image.title="Zabbix Agent"
 LABEL org.opencontainers.image.description="Zabbix Agent2 container"

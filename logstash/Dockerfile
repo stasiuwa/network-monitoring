@@ -1,4 +1,4 @@
-FROM docker.elastic.co/logstash/logstash:8.13.4
+FROM docker.elastic.co/logstash/logstash:9.3.3
 
 LABEL org.opencontainers.image.description="Logstash for Suricata logs"
 

@@ -1,3 +1,3 @@
-FROM postgres:16-alpine
+FROM postgres:latest
 
 LABEL org.opencontainers.image.description="PostgreSQL for log backup"
