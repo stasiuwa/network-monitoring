@@ -1,0 +1,1 @@
+﻿Zakładka Analytics -> Create Data View -> Name: np. Suricata, Index-patternL:filebeat -> save data view -> wtedy mozna przegladac jakie logi z suricaty przychodzą do elasticsearcha. Nie ma predefiniowanych dashboardów itp. narazie 
