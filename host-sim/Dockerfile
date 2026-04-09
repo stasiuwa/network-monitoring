@@ -1,3 +1,13 @@
+FROM debian:stable-slim AS filebeat-builder
+
+RUN apt-get update && apt-get install -y curl tar \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /tmp
+
+RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-9.3.3-linux-x86_64.tar.gz \
+    && tar xzf filebeat-9.3.3-linux-x86_64.tar.gz
+
 FROM debian:stable-slim
 
 LABEL org.opencontainers.image.title="Network Monitoring Stack"
@@ -5,7 +15,6 @@ LABEL org.opencontainers.image.description="Suricata + Filebeat"
 
 RUN apt-get update && apt-get install -y \
     suricata \
-    curl \
     supervisor \
     net-tools \
     iproute2 \
@@ -14,11 +23,7 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.13.4-linux-x86_64.tar.gz \
-    && tar xzf filebeat-8.13.4-linux-x86_64.tar.gz \
-    && mkdir -p /opt/filebeat \
-    && cp -r filebeat-8.13.4-linux-x86_64/* /opt/filebeat \
-    && rm -rf filebeat-8.13.4-linux-x86_64*
+COPY --from=filebeat-builder /tmp/filebeat-9.3.3-linux-x86_64 /opt/filebeat
 
 RUN mkdir -p /var/log/suricata \
     && mkdir -p /var/lib/filebeat \
