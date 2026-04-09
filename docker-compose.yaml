@@ -10,7 +10,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - monitoring
+      - zabbix
 
   zabbix-server:
     build: zabbix/server
@@ -22,7 +22,7 @@ services:
     ports:
       - "10051:10051"
     networks:
-      - monitoring
+      - zabbix
 
   zabbix-web:
     build: zabbix/web
@@ -34,7 +34,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - monitoring
+      - zabbix
 
   zabbix-agent:
     build: zabbix/agent
@@ -52,7 +52,7 @@ services:
       - zabbix-server
 
     networks:
-      - monitoring
+      - zabbix
 
   elasticsearch:
     build: ./elasticsearch
@@ -64,6 +64,8 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ports:
       - "9200:9200"
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
     networks:
       - monitoring
 
@@ -112,12 +114,14 @@ services:
 
     depends_on:
       - logstash
-      - zabbix-server
 
 
 volumes:
   postgres_data:
+  elastic_data:
 
 networks:
   monitoring:
+    driver: bridge
+  zabbix:
     driver: bridge
