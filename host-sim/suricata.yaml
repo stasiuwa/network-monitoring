@@ -3,7 +3,7 @@
 
 vars:
   address-groups:
-    HOME_NET: "[192.168.0.0/16,10.0.0.0/8]"
+    HOME_NET: "[192.168.0.0/24,10.0.0.0/8]"
     EXTERNAL_NET: "!$HOME_NET"
 
 default-log-dir: /var/log/suricata
@@ -13,6 +13,12 @@ af-packet:
     cluster-id: 99
     cluster-type: cluster_flow
     defrag: yes
+    use-mmap: yes
+    tpacket-v3: yes
+    ring-size: 200000
+    buffer-size: 64535
+    block-size: 32768
+    block-timeout: 10
 
 outputs:
   - eve-log:
@@ -32,5 +38,25 @@ logging:
 default-rule-path: /etc/suricata/rules
 
 rule-files:
-  - local.rules
-  - suricata.rules
+  - decoder-events.rules  #available in suricata sources under rules dir
+  - stream-events.rules   #available in suricata sources under rules dir
+  - http-events.rules     #available in suricata sources under rules dir
+  - http2-events.rules     #available in suricata sources under rules dir
+  - smtp-events.rules     #available in suricata sources under rules dir
+  - dns-events.rules      #available in suricata sources under rules dir
+  - tls-events.rules      #available in suricata sources under rules dir
+  - modbus-events.rules   #available in suricata sources under rules dir
+  - mqtt-events.rules   #available in suricata sources under rules dir
+  - app-layer-events.rules   #available in suricata sources under rules dir
+  - dnp3-events.rules        #available in suricata sources under rules dir
+  - ntp-events.rules        #available in suricata sources under rules dir
+  - ipsec-events.rules        #available in suricata sources under rules dir
+  - kerberos-events.rules        #available in suricata sources under rules dir
+  - smb-events.rules        #available in suricata sources under rules dir
+  - nfs-events.rules        #available in suricata sources under rules dir
+  - dhcp-events.rules        #available in suricata sources under rules dir
+  - ssh-events.rules        #available in suricata sources under rules dir
+  - rfb-events.rules        #available in suricata sources under rules dir
+  - ftp-events.rules        #available in suricata sources under rules dir
+  - files.rules        #available in suricata sources under rules dir
+  - quic-events.rules        #available in suricata sources under rules dir
