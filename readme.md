@@ -7,3 +7,7 @@ HOST-SIM: symuluje hosta środowiska rzeczywistego w celu prezentacji logów zbi
 github: https://github.com/stasiuwa/network-monitoring
 
 dockerhub: https://hub.docker.com/repositories/stasiuwa
+
+![diagram.svg.png](diagram.svg.png)
+
+![flowdiagram.png](flowdiagram.png)
