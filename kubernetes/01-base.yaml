@@ -31,38 +31,35 @@ metadata:
   namespace: monitoring
 data:
   logstash.yml: |
-    http.host: "0.0.0.0"
     pipeline.workers: 2
     pipeline.batch.size: 125
     log.level: info
     config.reload.automatic: true
-
   logstash.conf: |
-      input {
+    input {
       beats {
-      port => 5044
-      host => "0.0.0.0"
+        port => 5044
+        host => "0.0.0.0"
       }
     }
 
-      filter {
+    filter {
       date {
-      match => ["timestamp", "ISO8601"]
-      target => "@timestamp"
+        match => ["timestamp", "ISO8601"]
+        target => "@timestamp"
       }
-      
       mutate {
-      add_field => { "[@metadata][target_index]" => "suricata-alerts" }
+        add_field => { "[@metadata][target_index]" => "suricata-alerts" }
       }
     }
 
-      output {
+    output {
       elasticsearch {
-      hosts => ["http://elasticsearch:9200"]
-      index => "filebeat-%{+YYYY.MM.dd}"
+        hosts => ["http://elasticsearch:9200"]
+        index => "filebeat-%{+YYYY.MM.dd}"
       }
       stdout {
-      codec => rubydebug
+        codec => rubydebug
       }
     }
 ---

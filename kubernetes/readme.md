@@ -29,6 +29,7 @@ CONFIGMAP/SECRETS: zmienne środowiskowe i pliki konfiguracyjne poszczególnych 
 
 05-ingress.yaml
 - zastosowany do zarządzania ruchem http. mapowanie portów podów w klastrze na domeny.
+- do pliku hosts dodac 127.0.0.1 zabbix.minikube i kibana.minikube. Na Win trzeba odblokowac porty webowe = wywalic usługe IIS WINDOWS
 
 06-network-policy
 - wprowadzenie zasady zero trust w klastrze

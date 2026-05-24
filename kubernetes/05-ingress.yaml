@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: zabbix.local
+    - host: zabbix.minikube
       http:
         paths:
           - path: /
@@ -17,7 +17,7 @@ spec:
                 name: zabbix-web
                 port:
                   number: 8080
-    - host: kibana.local
+    - host: kibana.minikube
       http:
         paths:
           - path: /
