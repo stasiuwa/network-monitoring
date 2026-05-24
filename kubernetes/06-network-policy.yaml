@@ -1,0 +1,105 @@
+﻿---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-security-policy
+  namespace: monitoring
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: zabbix-server
+      ports:
+        - protocol: TCP
+          port: 5432
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: logstash-security-policy
+  namespace: monitoring
+spec:
+  podSelector:
+    matchLabels:
+      app: logstash
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: host-sim
+      ports:
+        - protocol: TCP
+          port: 5044
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: elasticsearch-security-policy
+  namespace: monitoring
+spec:
+  podSelector:
+    matchLabels:
+      app: elasticsearch
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: logstash
+        - podSelector:
+            matchLabels:
+              app: kibana
+      ports:
+        - protocol: TCP
+          port: 9200
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kibana-web-policy
+  namespace: monitoring
+spec:
+  podSelector:
+    matchLabels:
+      app: kibana
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/component: controller
+      ports:
+        - protocol: TCP
+          port: 5601
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: zabbix-web-policy
+  namespace: monitoring
+spec:
+  podSelector:
+    matchLabels:
+      app: zabbix-web
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/component: controller
+      ports:
+        - protocol: TCP
+          port: 8080
