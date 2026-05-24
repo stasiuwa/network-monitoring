@@ -67,6 +67,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: monitoring-env
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
 ---
 apiVersion: v1
 kind: Service
@@ -169,6 +176,13 @@ spec:
           env:
             - name: ELASTICSEARCH_HOSTS
               value: "http://elasticsearch:9200"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
