@@ -4,14 +4,22 @@ metadata:
   name: monitoring
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: monitoring-secrets
+  namespace: monitoring
+type: Opaque
+stringData:
+  POSTGRES_USER: "zabbix"
+  POSTGRES_PASSWORD: "zabbix_password"
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: monitoring-env
   namespace: monitoring
 data:
   POSTGRES_DB: "zabbix"
-  POSTGRES_USER: "zabbix"
-  POSTGRES_PASSWORD: "zabbix_password"
   ZBX_SERVER_HOST: "zabbix-server"
   ZBX_SERVER_PORT: "10051"
   DB_SERVER_HOST: "postgres"
