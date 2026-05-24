@@ -57,3 +57,20 @@ data:
       codec => rubydebug
       }
     }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zabbix-agent-config
+  namespace: monitoring
+data:
+  zabbix_agent2.conf: |
+    Server=zabbix-server
+    ServerActive=zabbix-server
+    Hostname=zabbix-agent
+
+    ListenPort=10050
+    ListenIP=0.0.0.0
+
+    LogFile=/dev/stdout
+    LogFileSize=0
