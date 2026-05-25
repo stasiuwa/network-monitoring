@@ -21,10 +21,8 @@ spec:
             - containerPort: 5432
               name: postgres
           envFrom:
-            - configMapRef:
-                name: monitoring-env
             - secretRef:
-                name: monitoring-secrets
+                name: postgres-secret
           resources:
             requests:
               memory: "256Mi"

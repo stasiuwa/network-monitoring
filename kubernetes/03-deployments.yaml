@@ -20,8 +20,8 @@ spec:
             - containerPort: 10051
               name: zabbix-port
           envFrom:
-            - configMapRef:
-                name: monitoring-env
+            - secretRef:
+                name: postgres-secret
           resources:
             requests:
               memory: "256Mi"
