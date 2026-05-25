@@ -67,6 +67,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: monitoring-env
+            - secretRef:
+                name: postgres-secret
           resources:
             requests:
               memory: "128Mi"

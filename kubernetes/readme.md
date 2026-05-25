@@ -33,7 +33,7 @@ CONFIGMAP/SECRETS: zmienne środowiskowe i pliki konfiguracyjne poszczególnych 
 
 06-network-policy
 - wprowadzenie zasady zero trust w klastrze
-- postgres dopuszcza ruch tylko od zabbix-server na porcie 5432 protokołem TCP
+- postgres dopuszcza ruch od zabbix-server/web na porcie 5432 protokołem TCP
 - logstash <-> host-sim TCP port 5044
 - elasticsearch <-> logstash, kibana TCP port 9200
 - Kibana, Zabbix Web <-> Ingress Controller, zewnętrzny kontroller do przekazywania ruchu z przegląarek. Pody nie mają powodu wysyłać żądań do graficznych interfejsów.
