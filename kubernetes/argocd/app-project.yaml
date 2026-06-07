@@ -8,7 +8,7 @@ spec:
     - "git@github.com:stasiuwa/network-monitoring.git"
   destinations:
     - server: "https://kubernetes.default.svc"
-      namespace: "network-monitoring"
+      namespace: "monitoring"
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
