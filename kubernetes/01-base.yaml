@@ -70,9 +70,9 @@ metadata:
   namespace: monitoring
 data:
   zabbix_agent2.conf: |
-    Server=zabbix-server
+    Server=0.0.0.0/0
     ServerActive=zabbix-server
-    Hostname=zabbix-agent
+    Hostname=host-sim
 
     ListenPort=10050
     ListenIP=0.0.0.0

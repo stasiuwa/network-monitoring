@@ -55,3 +55,16 @@ spec:
             items:
               - key: zabbix_agent2.conf
                 path: zabbix_agent2.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: host-sim
+  namespace: monitoring
+spec:
+  ports:
+    - port: 10050
+      targetPort: 10050
+      name: zabbix-agent
+  selector:
+    app: host-sim
