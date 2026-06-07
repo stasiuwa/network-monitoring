@@ -11,3 +11,6 @@ dockerhub: https://hub.docker.com/repositories/stasiuwa
 ![diagram.svg.png](diagram.svg.png)
 
 ![flowdiagram.png](flowdiagram.png)
+
+
+nie ma deploy, ograniczenia zasobów, wywalic userów w dockerfile'ach i dodach healthchecki, dodać secrety, czy wszystko pojdzie spiac na http, moze jaksi loadbalancer albo reverse proxy, zabezpieczeony transport do wolumenów - nie NFS, znalezc jakis inny system plików bo nfs przesyła gołe dane i łatwo mozna podsłuchać, 
