@@ -1,0 +1,14 @@
+﻿apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: monitoring-project
+  namespace: argocd
+spec:
+  sourceRepos:
+    - "git@github.com:stasiuwa/network-monitoring.git"
+  destinations:
+    - server: "https://kubernetes.default.svc"
+      namespace: "network-monitoring"
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
