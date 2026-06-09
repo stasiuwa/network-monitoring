@@ -1,0 +1,8 @@
+﻿---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monitoring-prune-test
+  namespace: monitoring
+data:
+  PRUNE: "prune_test_configmap"
